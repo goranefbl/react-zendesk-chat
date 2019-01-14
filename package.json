@@ -1,5 +1,5 @@
 {
-    "name": "react-zendesk-chat",
+    "name": "@goranefbl/react-zendesk-chat",
     "version": "1.0.0",
     "description": "Zendesk Chat as a React Component",
     "main": "index.js",
