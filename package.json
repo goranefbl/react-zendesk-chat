@@ -1,0 +1,39 @@
+{
+    "name": "react-zendesk-chat",
+    "version": "1.0.0",
+    "description": "Zendesk Chat as a React Component",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack --watch",
+        "build": "webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/goranefbl/react-zendesk-chat.git"
+    },
+    "keywords": [
+        "zendesk",
+        "zendesk",
+        "chat",
+        "react"
+    ],
+    "author": "Goran Jakovljevic",
+    "license": "MIT",
+    "dependencies": {
+        "prop-types": "^15.6.2",
+        "react": "^16.7.0",
+        "react-dom": "^16.7.0",
+        "webpack": "^4.28.4"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.2.3",
+        "@babel/core": "^7.2.2",
+        "@babel/plugin-proposal-class-properties": "^7.2.3",
+        "@babel/preset-env": "^7.2.3",
+        "@babel/preset-react": "^7.0.0",
+        "@babel/runtime": "^7.2.0",
+        "babel-loader": "^8.0.5",
+        "babel-plugin-transform-react-jsx": "^6.24.1",
+        "webpack-cli": "^3.2.1"
+    }
+}
