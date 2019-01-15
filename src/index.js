@@ -30,6 +30,12 @@ class ZendeskChat extends PureComponent {
         this.chatBoxEvents();
     }
 
+    componentWillUnmount() {
+        if (window.$zopim) {
+            delete window.$zopim;
+        }
+    }
+
     chatBoxEvents = () => {
         const { onlineMsg, offlineMsg, buttonID, alwaysShow } = this.props;
         $zopim(function() {
