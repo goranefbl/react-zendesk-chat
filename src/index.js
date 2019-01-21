@@ -1,33 +1,14 @@
 /* eslint-disable */
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 class ZendeskChat extends PureComponent {
     componentDidMount() {
-        const { appID } = this.props;
-        if (!window.$zopim) {
-            (function(document, script, appID) {
-                var zopim = (window.$zopim = function(c) {
-                    zopim._.push(c);
-                });
-                const $ = (zopim.s = document.createElement(script));
-                const element = document.getElementsByTagName(script)[0];
-
-                zopim.set = function(o) {
-                    zopim.set._.push(o);
-                };
-
-                zopim._ = [];
-                zopim.set._ = [];
-                $.async = !0;
-                $.setAttribute('charset', 'utf-8');
-                $.src = `https://v2.zopim.com/?${appID}`;
-                zopim.t = +new Date();
-                $.type = 'text/javascript';
-                element.parentNode.insertBefore($, element);
-            })(document, 'script', appID);
+        const { alwaysShow, buttonID } = this.props;
+        if (alwaysShow) {
+            this.initZopim();
         }
-        this.chatBoxEvents();
+        document.getElementById(buttonID).addEventListener('click', this.initZopim);
     }
 
     componentWillUnmount() {
@@ -36,8 +17,61 @@ class ZendeskChat extends PureComponent {
         }
     }
 
+    initZopim = () => {
+        const { appID } = this.props;
+
+        if (appID === undefined) {
+            console.log('Missing Zopim App ID. Please add it.');
+            return false;
+        }
+
+        if (!window.$zopim) {
+            const load = (function(document, script, appID) {
+                return new Promise(function(resolve, reject) {
+                    var zopim = (window.$zopim = function(c) {
+                        zopim._.push(c);
+                    });
+                    const $ = (zopim.s = document.createElement(script));
+                    const element = document.getElementsByTagName(script)[0];
+
+                    zopim.set = function(o) {
+                        zopim.set._.push(o);
+                    };
+
+                    zopim._ = [];
+                    zopim.set._ = [];
+                    $.async = !0;
+                    $.setAttribute('charset', 'utf-8');
+                    $.src = `https://v2.zopim.com/?${appID}`;
+                    zopim.t = +new Date();
+                    $.type = 'text/javascript';
+                    element.parentNode.insertBefore($, element);
+
+                    // Important success and error for the promise
+                    $.onload = () => {
+                        resolve();
+                    };
+
+                    $.onerror = () => {
+                        reject(new Error('Zopim API load error.'));
+                    };
+                });
+            })(document, 'script', appID);
+
+            load.then(() => {
+                this.chatBoxEvents();
+                $zopim.livechat.window.show();
+            }).catch(error => {
+                console.log(error);
+            });
+        } else {
+            $zopim.livechat.window.show();
+        }
+    };
+
     chatBoxEvents = () => {
-        const { onlineMsg, offlineMsg, buttonID, alwaysShow } = this.props;
+        const { onlineMsg, offlineMsg, alwaysShow } = this.props;
+
         $zopim(function() {
             $zopim.livechat.setGreetings({
                 online: onlineMsg,
@@ -53,10 +87,6 @@ class ZendeskChat extends PureComponent {
                     $zopim.livechat.hideAll();
                 }
             });
-            // Clicking on a button, brings up chat window
-            document.getElementById(buttonID).addEventListener('click', function() {
-                $zopim.livechat.button.show();
-            });
         });
     };
 
@@ -66,7 +96,7 @@ class ZendeskChat extends PureComponent {
 }
 
 ZendeskChat.propTypes = {
-    appID: PropTypes.string,
+    appID: PropTypes.string.isRequired,
     onlineMsg: PropTypes.string,
     offlineMsg: PropTypes.string,
     buttonID: PropTypes.string,

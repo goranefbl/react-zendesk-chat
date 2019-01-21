@@ -1,6 +1,7 @@
 # React Zen Desk Component
 
-A handy ReactJS component to be used for loading ZenDesk Chat into your website or web app.
+A handy ReactJS component to be used for loading ZenDesk Chat into your website or web app. SSR supported.
+If you are using your own button to start a chat, script wont run until then, which helps with speed performance, especially Lighthouse.
 
 ## Install
 
@@ -13,7 +14,7 @@ $ npm install @goranefbl/react-zendesk-chat
 To use this module, just import the library and use like:
 
 ```js
-import ZenDeskChat from "@goranefbl/react-zendesk-chat";
+import ZenDeskChat from '@goranefbl/react-zendesk-chat';
 
 <Chat
     appID="YOUR_ZENDESK_CHAT_APP_ID"
@@ -24,7 +25,9 @@ import ZenDeskChat from "@goranefbl/react-zendesk-chat";
 />;
 ```
 
-buttonID is the ID of a button that will make chat widget appear when clicked. Or pass alwaysShow prop to make chat widget always visible on page.
+buttonID is the ID of a button that will make chat widget appear when clicked. Or pass alwaysShow prop to make chat widget always visible on page. In the first case, script wont run at all until button is clicked which helps with speed performance, so thats prefered way of using it.
+
+Thanks [@leljak](https://github.com/leljak) for async idea.
 
 ## License
 
