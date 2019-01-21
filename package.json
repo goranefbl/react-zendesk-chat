@@ -1,6 +1,6 @@
 {
     "name": "@goranefbl/react-zendesk-chat",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Zendesk Chat as a React Component",
     "main": "build/index.js",
     "scripts": {
