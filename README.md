@@ -16,7 +16,7 @@ To use this module, just import the library and use like:
 ```js
 import ZenDeskChat from '@goranefbl/react-zendesk-chat';
 
-<Chat
+<ZenDeskChat
     appID="YOUR_ZENDESK_CHAT_APP_ID"
     onlineMsg="Live Chat Help"
     offlineMsg="Leave us a message"
